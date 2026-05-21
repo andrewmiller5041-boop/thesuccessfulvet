@@ -159,8 +159,82 @@
     transition: color 0.2s ease;
   }
   .nav__links a:hover { color: var(--navy); }
+
+  /* Hamburger button — hidden on desktop */
+  .nav__toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin: -0.5rem;
+    z-index: 110;
+  }
+  .nav__toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--navy);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+  .nav__toggle span + span { margin-top: 6px; }
+  /* Animate to X when open */
+  .nav__toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .nav__toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav__toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
   @media (max-width: 768px) {
-    .nav__links { display: none; }
+    .nav { backdrop-filter: none; -webkit-backdrop-filter: none; background: #FDFCF7; }
+    .nav__toggle { display: block; }
+    .nav__links {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(80vw, 320px);
+      flex-direction: column;
+      gap: 0;
+      background: #FDFCF7;
+      box-shadow: -8px 0 40px -12px rgba(31, 58, 95, 0.25);
+      padding: 5.5rem 2rem 2rem;
+      transform: translateX(100%);
+      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 105;
+    }
+    .nav--open .nav__links {
+      transform: translateX(0);
+    }
+    .nav__links a {
+      display: block;
+      font-size: 1.05rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--rule);
+      color: var(--navy);
+    }
+    .nav__links li:last-child a { border-bottom: none; }
+    /* Dim backdrop behind the open menu */
+    .nav__backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(21, 41, 63, 0.35);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.32s ease;
+      z-index: 104;
+    }
+    .nav--open .nav__backdrop {
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 
   /* ============ BUTTONS ============ */
@@ -1197,10 +1271,13 @@
 <body>
 
 <!-- ============ NAV ============ -->
-<nav class="nav">
+<nav class="nav" id="nav">
   <div class="container nav__inner">
     <a href="#" class="nav__brand">The Successful <span>Vet</span></a>
-    <ul class="nav__links">
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav__links" id="navLinks">
       <li><a href="#start">Start Here</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#book">The Book</a></li>
@@ -1209,6 +1286,7 @@
       <li><a href="#help">Need Help?</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <div class="nav__backdrop" id="navBackdrop"></div>
   </div>
 </nav>
 
@@ -1669,6 +1747,50 @@
 <script>
   // Set current year in footer
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile hamburger menu
+  (function () {
+    const nav = document.getElementById('nav');
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    const backdrop = document.getElementById('navBackdrop');
+    if (!nav || !toggle) return;
+
+    function openMenu() {
+      nav.classList.add('nav--open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+      document.body.style.overflow = 'hidden'; // prevent background scroll
+    }
+    function closeMenu() {
+      nav.classList.remove('nav--open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+      document.body.style.overflow = '';
+    }
+    function toggleMenu() {
+      if (nav.classList.contains('nav--open')) closeMenu();
+      else openMenu();
+    }
+
+    toggle.addEventListener('click', toggleMenu);
+    if (backdrop) backdrop.addEventListener('click', closeMenu);
+
+    // Close when a nav link is tapped (so it scrolls to the section)
+    links.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeMenu);
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('nav--open')) closeMenu();
+    });
+
+    // Close if window is resized up to desktop width
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768 && nav.classList.contains('nav--open')) closeMenu();
+    });
+  })();
 
   // Scroll-triggered reveals
   if ('IntersectionObserver' in window) {
