@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Tailor — The Successful Vet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --navy:#1F3A5F;
+    --navy-900:#101F33;
+    --navy-800:#16304F;
+    --gold:#C8A24B;
+    --gold-bright:#E0C070;
+    --cream:#F9F7F0;
+    --cream-dim:#F1EDE0;
+    --ink:#14212F;
+    --line:rgba(31,58,95,0.16);
+    --line-on-navy:rgba(249,247,240,0.16);
+    --good:#5E8C61;
+    --warn:#B5652E;
+    --font-display:'Fraunces', serif;
+    --font-body:'Manrope', sans-serif;
+    --font-mono:'Space Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .app{
+    max-width:720px;
+    margin:0 auto;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+
+  /* ---------- Top mark ---------- */
+  .brandbar{
+    padding:22px 24px 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .wordmark{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.16em;
+    font-weight:700;
+    color:var(--navy);
+    text-transform:uppercase;
+  }
+  .wordmark span{color:var(--gold);}
+  .tagline{
+    font-family:var(--font-mono);
+    font-size:10px;
+    letter-spacing:0.08em;
+    color:rgba(20,33,47,0.45);
+    text-transform:uppercase;
+  }
+
+  /* ---------- Screens ---------- */
+  .screen{display:none; flex:1; flex-direction:column;}
+  .screen.active{display:flex;}
+
+  /* ===== SETUP SCREEN ===== */
+  #setup-screen{padding:28px 24px 60px;}
+  .setup-card{
+    margin-top:18px;
+  }
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:38px;
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    color:var(--navy);
+    margin:0 0 10px;
+  }
+  h1.title em{
+    font-style:italic;
+    font-weight:600;
+    color:var(--gold);
+  }
+  .subhead{
+    font-size:15.5px;
+    line-height:1.55;
+    color:rgba(20,33,47,0.72);
+    max-width:52ch;
+    margin:0 0 30px;
+  }
+  .field-group{margin-bottom:22px;}
+  .field-label{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--navy);
+    font-weight:700;
+    display:block;
+    margin-bottom:10px;
+  }
+  .pill-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .pill{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:14px;
+    padding:11px 18px;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+    background:transparent;
+    color:var(--navy);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .pill:hover{border-color:var(--gold);}
+  .pill.active{
+    background:var(--navy);
+    border-color:var(--navy);
+    color:var(--cream);
+  }
+  input[type=text], select{
+    width:100%;
+    font-family:var(--font-body);
+    font-size:15px;
+    padding:13px 15px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:var(--ink);
+    outline:none;
+    transition:border-color .15s ease;
+  }
+  input[type=text]:focus, select:focus{border-color:var(--gold);}
+  input[type=file]{
+    width:100%;
+    font-family:var(--font-body);
+    font-size:13.5px;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1.5px dashed var(--line);
+    background:var(--cream-dim);
+    color:var(--ink);
+    cursor:pointer;
+  }
+  textarea{
+    font-family:var(--font-body);
+  }
+  textarea:focus{border-color:var(--gold); outline:none;}
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:520px){.two-col{grid-template-columns:1fr;}}
+
+  .count-row{display:flex; gap:10px;}
+  .count-pill{
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:14px;
+    width:52px; height:44px;
+    border-radius:8px;
+    border:1.5px solid var(--line);
+    background:transparent;
+    color:var(--navy);
+    cursor:pointer;
+  }
+  .count-pill.active{background:var(--gold); border-color:var(--gold); color:var(--navy-900);}
+
+  .begin-btn{
+    margin-top:12px;
+    width:100%;
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:16px;
+    padding:17px 22px;
+    border-radius:10px;
+    border:none;
+    background:var(--navy);
+    color:var(--cream);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .begin-btn:hover{background:var(--navy-800);}
+  .begin-btn:active{transform:scale(0.99);}
+  .begin-btn:disabled{opacity:0.5; cursor:not-allowed;}
+
+  .tip-box{
+    margin-top:26px;
+    border-left:3px solid var(--gold);
+    padding:14px 16px;
+    background:var(--cream-dim);
+    border-radius:0 8px 8px 0;
+  }
+  .tip-box .tip-label{
+    font-family:var(--font-mono);
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .tip-box p{margin:0; font-size:13.5px; line-height:1.55; color:rgba(20,33,47,0.75);}
+
+  .disclaimer{
+    margin-top:20px;
+    font-size:12px;
+    line-height:1.5;
+    color:rgba(20,33,47,0.45);
+  }
+
+  /* ===== INTERVIEW SCREEN ===== */
+  #interview-screen{
+    background:var(--navy-900);
+    min-height:100vh;
+  }
+  .interview-header{
+    padding:18px 22px 14px;
+    border-bottom:1px solid var(--line-on-navy);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .interview-header .role-tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--cream);
+    opacity:0.7;
+    letter-spacing:0.04em;
+  }
+  .progress-wrap{
+    display:flex; align-items:center; gap:10px;
+  }
+  .progress-label{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.08em;
+    color:var(--gold);
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .progress-track{
+    width:100px; height:5px; border-radius:3px;
+    background:rgba(249,247,240,0.14);
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; background:var(--gold);
+    border-radius:3px;
+    transition:width .4s ease;
+  }
+
+  .transcript{
+    flex:1;
+    padding:22px 20px 160px;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+
+  .entry{max-width:100%;}
+  .speaker-label{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    font-weight:700;
+    margin-bottom:7px;
+  }
+  .entry.interviewer .speaker-label{color:var(--gold);}
+  .entry.candidate .speaker-label{color:rgba(249,247,240,0.55); text-align:right;}
+  .bubble{
+    font-size:15px;
+    line-height:1.6;
+    padding:14px 16px;
+    border-radius:12px;
+  }
+  .entry.interviewer .bubble{
+    background:var(--navy-800);
+    color:var(--cream);
+    border-left:3px solid var(--gold);
+    border-radius:4px 12px 12px 12px;
+  }
+  .entry.candidate .bubble{
+    background:rgba(249,247,240,0.08);
+    color:var(--cream);
+    border-radius:12px 4px 12px 12px;
+    margin-left:auto;
+  }
+  .entry.candidate{display:flex; flex-direction:column; align-items:flex-end;}
+  .entry.candidate .bubble{max-width:88%;}
+
+  /* AAR debrief card — signature element */
+  .aar{
+    margin-top:6px;
+    background:var(--cream);
+    border-radius:4px 12px 12px 12px;
+    border-left:3px solid var(--gold);
+    padding:16px 18px;
+    color:var(--ink);
+  }
+  .aar-head{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:0.12em;
+    font-weight:700;
+    color:var(--navy);
+    text-transform:uppercase;
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .aar-head::before{content:"▸"; color:var(--gold);}
+  .aar-row{margin-bottom:11px;}
+  .aar-row:last-child{margin-bottom:0;}
+  .aar-row-label{
+    font-family:var(--font-mono);
+    font-size:10px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--gold);
+    margin-bottom:3px;
+  }
+  .aar-row-text{font-size:13.5px; line-height:1.55; color:rgba(20,33,47,0.85);}
+  .verb-flags{display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;}
+  .verb-chip{
+    font-family:var(--font-mono);
+    font-size:11px;
+    padding:3px 9px;
+    border-radius:999px;
+    background:rgba(181,101,46,0.12);
+    color:var(--warn);
+    text-decoration:line-through;
+    font-weight:700;
+  }
+  .aar-overall{
+    margin-top:12px;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+    font-size:13.5px;
+    line-height:1.55;
+    font-style:italic;
+    color:var(--navy);
+  }
+
+  .thinking{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 2px;
+  }
+  .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--gold);
+    animation:pulse 1.2s infinite ease-in-out;
+  }
+  .dot:nth-child(2){animation-delay:0.2s;}
+  .dot:nth-child(3){animation-delay:0.4s;}
+  @keyframes pulse{
+    0%,80%,100%{opacity:0.25; transform:scale(0.85);}
+    40%{opacity:1; transform:scale(1);}
+  }
+
+  .input-bar{
+    position:fixed;
+    bottom:0; left:0; right:0;
+    background:var(--navy-900);
+    border-top:1px solid var(--line-on-navy);
+    padding:14px 20px calc(14px + env(safe-area-inset-bottom));
+  }
+  .input-bar-inner{
+    max-width:720px; margin:0 auto;
+    display:flex; gap:10px; align-items:flex-end;
+  }
+  .send-btn{
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:14px;
+    padding:0 20px;
+    height:46px;
+    border-radius:10px;
+    border:none;
+    background:var(--gold);
+    color:var(--navy-900);
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .send-btn:disabled{opacity:0.4; cursor:not-allowed;}
+
+  /* ===== SUMMARY SCREEN ===== */
+  #summary-screen{padding:30px 24px 60px; background:var(--cream);}
+  .summary-eyebrow{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .summary-title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:32px;
+    color:var(--navy);
+    margin:0 0 24px;
+  }
+  .summary-block{margin-bottom:26px;}
+  .summary-block h3{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--navy);
+    margin:0 0 12px;
+  }
+  .summary-list{margin:0; padding:0; list-style:none;}
+  .summary-list li{
+    padding:12px 0 12px 22px;
+    position:relative;
+    font-size:14.5px;
+    line-height:1.55;
+    border-bottom:1px solid var(--line);
+    color:rgba(20,33,47,0.85);
+  }
+  .summary-list.strengths li::before{content:"✓"; position:absolute; left:0; color:var(--good); font-weight:700;}
+  .summary-list.priorities li::before{content:"→"; position:absolute; left:0; color:var(--gold); font-weight:700;}
+
+  .review-field{
+    border-left:3px solid var(--gold);
+    background:var(--cream-dim);
+    border-radius:0 10px 10px 0;
+    padding:14px 16px;
+    margin-bottom:14px;
+  }
+  .review-field-label{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--navy);
+    font-weight:700;
+    margin-bottom:4px;
+  }
+  .review-field-prompt{
+    font-size:13px;
+    color:rgba(20,33,47,0.65);
+    margin-bottom:10px;
+    line-height:1.5;
+  }
+  .review-field textarea{
+    width:100%;
+    font-family:var(--font-body);
+    font-size:14px;
+    line-height:1.55;
+    padding:11px 13px;
+    border-radius:8px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:var(--ink);
+    resize:vertical;
+    min-height:56px;
+  }
+  .review-field textarea:focus{border-color:var(--gold); outline:none;}
+
+  /* ---------- Before/after diff ---------- */
+  .diff-role-header{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--navy);
+    font-weight:700;
+    margin:22px 0 10px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--line);
+  }
+  .diff-role-header:first-child{margin-top:0;}
+  .diff-card{
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:12px;
+  }
+  .diff-before, .diff-after{
+    padding:4px 0;
+  }
+  .diff-label{
+    font-family:var(--font-mono);
+    font-size:9.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-weight:700;
+    display:block;
+    margin-bottom:3px;
+  }
+  .diff-before .diff-label{color:rgba(20,33,47,0.4);}
+  .diff-after .diff-label{color:var(--good);}
+  .diff-before-text{
+    font-size:13px;
+    line-height:1.5;
+    color:rgba(20,33,47,0.48);
+    font-style:italic;
+  }
+  .diff-after-text{
+    font-size:14px;
+    line-height:1.55;
+    color:var(--ink);
+    font-weight:500;
+  }
+  .diff-arrow{
+    text-align:center;
+    color:var(--gold);
+    font-size:13px;
+    margin:2px 0;
+  }
+  .diff-flagged .diff-label{color:var(--gold);}
+  .diff-flagged .review-field-prompt{margin:2px 0 8px;}
+  .diff-flagged textarea{margin-top:0;}
+  .closing-note{
+    font-size:14.5px;
+    line-height:1.6;
+    font-style:italic;
+    color:var(--navy);
+    padding:16px 18px;
+    background:var(--cream-dim);
+    border-left:3px solid var(--gold);
+    border-radius:0 8px 8px 0;
+  }
+  .summary-actions{display:flex; gap:12px; margin-top:28px; flex-wrap:wrap;}
+  .action-btn{
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:14px;
+    padding:13px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    border:1.5px solid var(--navy);
+  }
+  .action-btn.primary{background:var(--navy); color:var(--cream);}
+  .action-btn.secondary{background:transparent; color:var(--navy);}
+  .footer-note{
+    margin-top:34px;
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:rgba(20,33,47,0.4);
+    line-height:1.6;
+  }
+  .footer-note a{color:var(--navy);}
+
+  /* ===== AUTH SCREEN ===== */
+  #auth-screen{padding:28px 24px 60px; max-width:440px; margin:0 auto;}
+  .auth-card{margin-top:40px;}
+  .auth-note{
+    margin-top:16px;
+    font-size:13px;
+    line-height:1.55;
+    color:rgba(20,33,47,0.55);
+  }
+  .oauth-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:15px;
+    padding:13px 16px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    color:var(--ink);
+    cursor:pointer;
+    margin-bottom:10px;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .oauth-btn:hover{border-color:var(--gold); background:var(--cream-dim);}
+  .oauth-btn svg{flex-shrink:0;}
+  .auth-divider{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:20px 0;
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.04em;
+    color:rgba(20,33,47,0.4);
+  }
+  .auth-divider::before, .auth-divider::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+  .password-field-wrap{position:relative;}
+  .password-field-wrap input{padding-right:46px;}
+  .password-toggle{
+    position:absolute;
+    right:14px;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    cursor:pointer;
+    color:rgba(20,33,47,0.4);
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:4px;
+  }
+  .password-toggle:hover{color:var(--navy);}
+  .password-hint{
+    font-size:12px;
+    color:rgba(20,33,47,0.45);
+    margin-top:6px;
+  }
+  .auth-mode-toggle{
+    text-align:center;
+    margin-top:20px;
+    font-size:13.5px;
+    color:rgba(20,33,47,0.6);
+  }
+  .auth-mode-toggle a{color:var(--navy); font-weight:600; text-decoration:underline; cursor:pointer;}
+
+  .error-box{
+    margin-top:14px;
+    padding:12px 14px;
+    border-radius:8px;
+    background:rgba(181,101,46,0.1);
+    color:var(--warn);
+    font-size:13px;
+  }
+  .magic-sent{
+    margin-top:16px;
+    padding:14px 16px;
+    background:var(--cream-dim);
+    border-left:3px solid var(--good);
+    border-radius:0 8px 8px 0;
+    font-size:13.5px;
+    color:var(--navy);
+  }
+
+  /* ===== ACCOUNT BAR ===== */
+  .account-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 24px;
+    background:var(--cream-dim);
+    border-bottom:1px solid var(--line);
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:rgba(20,33,47,0.65);
+    flex-wrap:wrap;
+  }
+  .account-bar a{color:var(--navy); text-decoration:underline; cursor:pointer;}
+  .account-bar .sessions-left{color:var(--navy); font-weight:700;}
+
+  /* ===== UPGRADE SCREEN ===== */
+  #upgrade-screen{padding:28px 24px 60px;}
+  .plan-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:26px;
+  }
+  @media (max-width:520px){.plan-grid{grid-template-columns:1fr;}}
+  .plan-card{
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:22px 20px;
+    background:#fff;
+  }
+  .plan-card.featured{border-color:var(--gold); border-width:2px;}
+  .plan-name{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:20px;
+    color:var(--navy);
+    margin:0 0 6px;
+  }
+  .plan-desc{font-size:13px; color:rgba(20,33,47,0.6); margin:0 0 16px; line-height:1.5;}
+  .plan-cta{
+    width:100%;
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:14px;
+    padding:12px 16px;
+    border-radius:8px;
+    border:1.5px solid var(--navy);
+    background:var(--navy);
+    color:var(--cream);
+    cursor:pointer;
+  }
+  .plan-card:not(.featured) .plan-cta{background:transparent; color:var(--navy);}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ AUTH SCREEN ============ -->
+  <div class="screen active" id="auth-screen">
+    <div class="brandbar">
+      <div class="wordmark">THE SUCCESSFUL <span>VET</span></div>
+      <div class="tagline">Resume Tailor</div>
+    </div>
+    <div class="auth-card">
+      <h1 class="title" id="auth-title">Sign in to<br><em>tailor your resume.</em></h1>
+      <p class="subhead" id="auth-subhead">Sign in or create your free account.</p>
+
+      <button class="oauth-btn" id="oauth-google-btn" type="button">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
+        Continue with Google
+      </button>
+      <button class="oauth-btn" id="oauth-linkedin-btn" type="button">
+        <svg width="18" height="18" viewBox="0 0 18 18"><rect width="18" height="18" rx="3" fill="#0A66C2"/><path fill="#fff" d="M5.34 7.34H3v7.34h2.34V7.34zM4.17 6.3a1.36 1.36 0 1 0 0-2.72 1.36 1.36 0 0 0 0 2.72zM15 10.6c0-2.1-1.12-3.08-2.62-3.08-1.2 0-1.74.66-2.04 1.13v-.97H8v7.34h2.34v-4.1c0-.4.03-.8.4-1.08.24-.2.6-.3.98-.3.7 0 1.28.4 1.28 1.42v4.06H15V10.6z"/></svg>
+        Continue with LinkedIn
+      </button>
+
+      <div class="auth-divider">or continue with email</div>
+
+      <div class="field-group" id="auth-fullname-group">
+        <label class="field-label">Full name</label>
+        <input type="text" id="auth-fullname" placeholder="Your name">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Email</label>
+        <input type="text" id="auth-email" placeholder="you@example.com">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Password</label>
+        <div class="password-field-wrap">
+          <input type="password" id="auth-password" placeholder="Create a password">
+          <button type="button" class="password-toggle" id="password-toggle-btn">Show</button>
+        </div>
+        <div class="password-hint" id="password-hint">At least 6 characters</div>
+      </div>
+
+      <button class="begin-btn" id="auth-submit-btn">Create Free Account</button>
+      <div class="magic-sent" id="magic-sent" style="display:none;">Check your email to confirm your account, then come back and sign in.</div>
+      <div class="error-box" id="auth-error" style="display:none;"></div>
+
+      <div class="auth-mode-toggle" id="auth-mode-toggle">
+        Already have an account? <a id="auth-mode-link">Sign in</a>
+      </div>
+
+      <p class="auth-note">By continuing you agree this is AI-assisted resume rewriting, not a guarantee of interviews or offers.</p>
+    </div>
+  </div>
+
+  <!-- ============ UPGRADE SCREEN ============ -->
+  <div class="screen" id="upgrade-screen">
+    <div class="account-bar">
+      <span id="upgrade-account-email"></span>
+      <a id="upgrade-signout">Sign out</a>
+    </div>
+    <div style="padding:28px 24px 0;">
+      <div class="brandbar" style="padding:0 0 8px;">
+        <div class="wordmark">THE SUCCESSFUL <span>VET</span></div>
+        <div class="tagline">Choose a plan</div>
+      </div>
+      <h1 class="title" style="font-size:30px; margin-top:14px;">One plan.<br><em>Every AI tool.</em></h1>
+      <p class="subhead" id="upgrade-message">Pick a plan to start tailoring.</p>
+    </div>
+    <div class="plan-grid" style="padding:0 24px;">
+      <div class="plan-card">
+        <div class="plan-name">Starter</div>
+        <p class="plan-desc">4 resume tailoring sessions a month. Good for one active job search.</p>
+        <button class="plan-cta" data-plan="starter">Choose Starter</button>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-name">Pro</div>
+        <p class="plan-desc">20 sessions a month, plus history to track every version you've sent out.</p>
+        <button class="plan-cta" data-plan="pro">Choose Pro</button>
+      </div>
+    </div>
+    <div class="error-box" id="upgrade-error" style="display:none; margin:20px 24px 0;"></div>
+  </div>
+
+  <!-- ============ SETUP SCREEN (upload) ============ -->
+  <div class="screen" id="setup-screen">
+    <div class="account-bar">
+      <span><span id="setup-account-email"></span> · <span class="sessions-left" id="setup-sessions-left"></span></span>
+      <span><a id="setup-manage-billing">Manage billing</a> · <a id="setup-signout">Sign out</a></span>
+    </div>
+    <div class="brandbar">
+      <div class="wordmark">THE SUCCESSFUL <span>VET</span></div>
+      <div class="tagline">Resume Tailor</div>
+    </div>
+
+    <div class="setup-card">
+      <h1 class="title">Same experience.<br><em>Civilian language.</em></h1>
+      <p class="subhead">Upload your resume. We'll rewrite your summary, bullets, and skills using the same rules from the book — quantified results, no "led/managed/oversaw/directed," nothing invented that isn't already in your resume.</p>
+
+      <div class="field-group">
+        <label class="field-label">Who's this for</label>
+        <div class="pill-row" id="track-pills">
+          <button class="pill active" data-track="veteran">Veteran</button>
+          <button class="pill" data-track="spouse">Military Spouse</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Your resume (.docx or .pdf)</label>
+        <input type="file" id="resume-file-input" accept=".docx,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+        <div id="file-chosen-name" style="margin-top:8px; font-size:13px; color:rgba(20,33,47,0.6);"></div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Target role &amp; company (optional)</label>
+        <div class="two-col">
+          <input type="text" id="role-input" placeholder="e.g. Operations Manager">
+          <input type="text" id="company-input" placeholder="e.g. company name">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Job description (optional, but recommended)</label>
+        <textarea id="jd-input" rows="4" placeholder="Paste the job posting here — we'll mirror its exact keywords where it's true to your background." style="width:100%; font-family:var(--font-body); font-size:14px; padding:12px 14px; border-radius:10px; border:1.5px solid var(--line); resize:vertical;"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">MOS / Rating / AFSC code (optional)</label>
+        <input type="text" id="mos-input" placeholder="e.g. 92A, or leave blank">
+      </div>
+
+      <button class="begin-btn" id="begin-btn">Tailor my resume →</button>
+
+      <div class="tip-box">
+        <div class="tip-label">Before you upload</div>
+        <p>We only work with what's actually in your resume — no invented numbers, employers, or tools. Anywhere your resume is missing a real number, we'll flag it so you can add your own instead of a made-up one. If the same job shows up at several duty stations, we'll combine those into one entry — real promotions stay separate. Old scanned resumes work too — we'll read them automatically if a direct text extraction doesn't work.</p>
+      </div>
+
+      <div class="error-box" id="setup-error" style="display:none;"></div>
+      <p class="disclaimer">AI-assisted rewriting, not a guarantee of interviews or offers. You should review the tailored resume for accuracy before you send it anywhere.</p>
+    </div>
+  </div>
+
+  <!-- ============ PROCESSING SCREEN ============ -->
+  <div class="screen" id="processing-screen">
+    <div class="brandbar">
+      <div class="wordmark">THE SUCCESSFUL <span>VET</span></div>
+      <div class="tagline">Resume Tailor</div>
+    </div>
+    <div style="padding:80px 24px; text-align:center;">
+      <div class="thinking" style="justify-content:center; margin-bottom:20px;">
+        <div class="dot" style="background:var(--navy);"></div><div class="dot" style="background:var(--navy);"></div><div class="dot" style="background:var(--navy);"></div>
+      </div>
+      <p style="font-family:var(--font-mono); font-size:13px; letter-spacing:0.06em; color:rgba(20,33,47,0.6);" id="processing-label">Reading your resume…</p>
+    </div>
+  </div>
+
+  <!-- ============ RESULTS SCREEN ============ -->
+  <div class="screen" id="summary-screen">
+    <div class="brandbar" style="padding:20px 24px 20px;">
+      <div class="wordmark">THE SUCCESSFUL <span>VET</span></div>
+      <div class="tagline">Tailored</div>
+    </div>
+    <div style="padding:0 24px 60px;">
+      <div class="summary-eyebrow">RESUME // TAILORED</div>
+      <h2 class="summary-title">Ready to download.</h2>
+
+      <div class="tip-box" id="ocr-notice" style="display:none; border-left-color:var(--warn);">
+        <div class="tip-label" style="color:var(--warn);">Read from a scan</div>
+        <p>This looked like a scanned or image-based PDF, so we read it with OCR instead of a direct text extraction. Double-check the "Before" text below against your original — OCR occasionally misreads a character or two.</p>
+      </div>
+
+      <div class="summary-block" id="keyword-block" style="display:none;">
+        <h3>Job description keyword coverage</h3>
+        <p style="font-size:13px; color:rgba(20,33,47,0.6); margin:-4px 0 14px;">ATS systems scan for exact phrases from the posting. Here's what made it in — and what didn't.</p>
+        <ul class="summary-list strengths" id="keyword-matched-list"></ul>
+        <ul class="summary-list priorities" id="keyword-missing-list" style="margin-top:8px;"></ul>
+      </div>
+
+      <div class="summary-block">
+        <h3>What we changed</h3>
+        <ul class="summary-list strengths" id="key-changes-list"></ul>
+      </div>
+
+      <div class="summary-block">
+        <h3>Before &amp; after, line by line</h3>
+        <p style="font-size:13px; color:rgba(20,33,47,0.6); margin:-4px 0 14px;">Every bullet we touched, next to what it looked like in your original resume. Anywhere marked "needs your input," we didn't invent a number — that box is yours to fill in with the real one.</p>
+        <div id="diff-view"></div>
+      </div>
+
+      <div class="summary-block" id="mos-notes-block" style="display:none;">
+        <h3>MOS translation notes</h3>
+        <ul class="summary-list priorities" id="mos-notes-list"></ul>
+      </div>
+
+      <div class="summary-actions">
+        <button class="action-btn primary" id="download-btn">Download tailored resume</button>
+        <button class="action-btn secondary" id="download-memo-btn">Download what we changed</button>
+      </div>
+      <div class="summary-actions" style="margin-top:8px;">
+        <button class="action-btn secondary" id="restart-btn">Tailor another</button>
+      </div>
+      <div class="error-box" id="download-error" style="display:none; margin-top:14px;"></div>
+
+      <p class="footer-note">This tool follows the same bullet formula and banned-verb rules from <em>The Successful Veteran</em>. Want to keep tightening your job search? Grab the free <a href="https://thesuccessfulvet.com" target="_blank">LinkedIn Overhaul Checklist</a> at thesuccessfulvet.com.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const state = {
+    track: 'veteran',
+    role: '',
+    company: '',
+    tailored: null,
+    docxBase64: null,
+    fileName: null,
+    memoBase64: null,
+    memoFileName: null,
+    hasUnsavedEdits: false,
+    usedOcr: false,
+    keywordCoverage: { matched: [], missing: [] },
+    user: null,
+    accountStatus: null // response from GET /api/account/status
+  };
+
+  // ---------- Configuration ----------
+  // Fill these in with your own Supabase project values (Project
+  // Settings > API). The anon key is safe to expose client-side —
+  // it can only ever act as the signed-in user, and Row Level
+  // Security in the database schema blocks everything else.
+  const SUPABASE_URL = 'https://kfpapwgxdkjxkdjseuht.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtmcGFwd2d4ZGtqeGtkanNldWh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5Mzc0NzQsImV4cCI6MjA5OTUxMzQ3NH0.8emltW0qZCr5vOcEMBdHxVysNFMTtIo9wnEh5fsk0nY';
+
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  async function getAccessToken(){
+    const { data } = await supabaseClient.auth.getSession();
+    return data.session ? data.session.access_token : null;
+  }
+
+  async function apiFetch(path, options){
+    const token = await getAccessToken();
+    const headers = Object.assign(
+      { 'Content-Type': 'application/json' },
+      token ? { 'Authorization': 'Bearer ' + token } : {},
+      (options && options.headers) || {}
+    );
+    return fetch(path, Object.assign({}, options, { headers }));
+  }
+
+  // ---------- Auth screen ----------
+  const authFullnameGroup = document.getElementById('auth-fullname-group');
+  const authFullnameInput = document.getElementById('auth-fullname');
+  const authEmailInput = document.getElementById('auth-email');
+  const authPasswordInput = document.getElementById('auth-password');
+  const authSubmitBtn = document.getElementById('auth-submit-btn');
+  const authError = document.getElementById('auth-error');
+  const magicSent = document.getElementById('magic-sent');
+  const authTitle = document.getElementById('auth-title');
+  const authSubhead = document.getElementById('auth-subhead');
+  const authModeLink = document.getElementById('auth-mode-link');
+  const authModeToggle = document.getElementById('auth-mode-toggle');
+  const passwordHint = document.getElementById('password-hint');
+
+  let authMode = 'signup'; // 'signup' | 'signin'
+
+  function setAuthMode(mode){
+    authMode = mode;
+    authError.style.display = 'none';
+    magicSent.style.display = 'none';
+    if(mode === 'signup'){
+      authTitle.innerHTML = 'Create your<br><em>free account.</em>';
+      authSubhead.textContent = 'Sign in or create your free account.';
+      authFullnameGroup.style.display = 'block';
+      passwordHint.style.display = 'block';
+      authSubmitBtn.textContent = 'Create Free Account';
+      authModeToggle.innerHTML = 'Already have an account? <a id="auth-mode-link">Sign in</a>';
+    } else {
+      authTitle.innerHTML = 'Sign in to<br><em>tailor your resume.</em>';
+      authSubhead.textContent = 'Welcome back.';
+      authFullnameGroup.style.display = 'none';
+      passwordHint.style.display = 'none';
+      authSubmitBtn.textContent = 'Sign In';
+      authModeToggle.innerHTML = 'Need an account? <a id="auth-mode-link">Create one</a>';
+    }
+    // the link was replaced via innerHTML above, so re-bind its listener
+    document.getElementById('auth-mode-link').addEventListener('click', () => {
+      setAuthMode(authMode === 'signup' ? 'signin' : 'signup');
+    });
+  }
+  document.getElementById('auth-mode-link').addEventListener('click', () => setAuthMode('signin'));
+  setAuthMode('signup'); // establish consistent initial UI state
+
+  document.getElementById('password-toggle-btn').addEventListener('click', () => {
+    const btn = document.getElementById('password-toggle-btn');
+    const isHidden = authPasswordInput.type === 'password';
+    authPasswordInput.type = isHidden ? 'text' : 'password';
+    btn.textContent = isHidden ? 'Hide' : 'Show';
+  });
+
+  authSubmitBtn.addEventListener('click', async () => {
+    const email = authEmailInput.value.trim();
+    const password = authPasswordInput.value;
+    const fullName = authFullnameInput.value.trim();
+    authError.style.display = 'none';
+    magicSent.style.display = 'none';
+
+    if(!email || !email.includes('@')){
+      authError.textContent = 'Enter a valid email address.';
+      authError.style.display = 'block';
+      return;
+    }
+    if(!password || password.length < 6){
+      authError.textContent = 'Password must be at least 6 characters.';
+      authError.style.display = 'block';
+      return;
+    }
+    if(authMode === 'signup' && !fullName){
+      authError.textContent = 'Enter your full name.';
+      authError.style.display = 'block';
+      return;
+    }
+
+    authSubmitBtn.disabled = true;
+    authSubmitBtn.textContent = authMode === 'signup' ? 'Creating account…' : 'Signing in…';
+
+    let result;
+    if(authMode === 'signup'){
+      result = await supabaseClient.auth.signUp({
+        email, password,
+        options: { data: { full_name: fullName } }
+      });
+    } else {
+      result = await supabaseClient.auth.signInWithPassword({ email, password });
+    }
+
+    authSubmitBtn.disabled = false;
+    authSubmitBtn.textContent = authMode === 'signup' ? 'Create Free Account' : 'Sign In';
+
+    if(result.error){
+      authError.textContent = result.error.message || 'Something went wrong. Try again.';
+      authError.style.display = 'block';
+      return;
+    }
+
+    // If email confirmation is required (default Supabase setting),
+    // signUp succeeds but returns no session — the user has to
+    // confirm before they can actually sign in.
+    if(authMode === 'signup' && !result.data.session){
+      magicSent.style.display = 'block';
+      return;
+    }
+    // Otherwise onAuthStateChange (registered elsewhere) picks up the
+    // new session and routes automatically.
+  });
+
+  document.getElementById('oauth-google-btn').addEventListener('click', async () => {
+    authError.style.display = 'none';
+    const { error } = await supabaseClient.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.href }
+    });
+    if(error){
+      authError.textContent = error.message || 'Could not start Google sign-in.';
+      authError.style.display = 'block';
+    }
+  });
+
+  document.getElementById('oauth-linkedin-btn').addEventListener('click', async () => {
+    authError.style.display = 'none';
+    const { error } = await supabaseClient.auth.signInWithOAuth({
+      provider: 'linkedin_oidc',
+      options: { redirectTo: window.location.href }
+    });
+    if(error){
+      authError.textContent = error.message || 'Could not start LinkedIn sign-in.';
+      authError.style.display = 'block';
+    }
+  });
+
+  document.getElementById('upgrade-signout').addEventListener('click', () => supabaseClient.auth.signOut());
+  document.getElementById('setup-signout').addEventListener('click', () => supabaseClient.auth.signOut());
+
+  document.getElementById('setup-manage-billing').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const res = await apiFetch('/api/stripe/portal', { method: 'POST' });
+    if(res.ok){
+      const { url } = await res.json();
+      window.location.href = url;
+    }
+  });
+
+  document.querySelectorAll('.plan-cta').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const upgradeError = document.getElementById('upgrade-error');
+      upgradeError.style.display = 'none';
+      btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = 'Redirecting…';
+      try {
+        const res = await apiFetch('/api/stripe/create-checkout-session', {
+          method: 'POST',
+          body: JSON.stringify({ plan: btn.dataset.plan })
+        });
+        if(!res.ok){
+          const body = await res.json().catch(() => ({}));
+          throw new Error(body.error || 'Could not start checkout');
+        }
+        const { url } = await res.json();
+        window.location.href = url;
+      } catch(err){
+        upgradeError.textContent = err.message;
+        upgradeError.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    });
+  });
+
+  // ---------- Auth state routing ----------
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+    if(session && session.user){
+      state.user = session.user;
+      document.getElementById('upgrade-account-email').textContent = session.user.email;
+      document.getElementById('setup-account-email').textContent = session.user.email;
+      routeAfterAuth();
+    } else {
+      state.user = null;
+      switchScreen('auth-screen');
+    }
+  });
+
+  async function routeAfterAuth(){
+    const res = await apiFetch('/api/resume/status', { method: 'GET' });
+    if(!res.ok){
+      switchScreen('auth-screen');
+      return;
+    }
+    const status = await res.json();
+    state.accountStatus = status;
+
+    if(!status.eligible){
+      document.getElementById('upgrade-message').textContent =
+        status.error || 'Pick a plan to keep tailoring resumes.';
+      switchScreen('upgrade-screen');
+      return;
+    }
+
+    if(status.source === 'free'){
+      document.getElementById('setup-sessions-left').textContent =
+        status.freeRemaining + ' free tailored resume' + (status.freeRemaining === 1 ? '' : 's') + ' left';
+    } else {
+      document.getElementById('setup-sessions-left').textContent =
+        status.sessionsRemaining + ' of ' + status.monthlyLimit + ' sessions left this month';
+    }
+    switchScreen('setup-screen');
+  }
+
+  // ---------- Setup screen interactions ----------
+  const trackPills = document.querySelectorAll('#track-pills .pill');
+  trackPills.forEach(p => p.addEventListener('click', () => {
+    trackPills.forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    state.track = p.dataset.track;
+  }));
+
+  const roleInput = document.getElementById('role-input');
+  const companyInput = document.getElementById('company-input');
+  const jdInput = document.getElementById('jd-input');
+  const mosInput = document.getElementById('mos-input');
+  const fileInput = document.getElementById('resume-file-input');
+  const fileChosenName = document.getElementById('file-chosen-name');
+  const beginBtn = document.getElementById('begin-btn');
+  const setupError = document.getElementById('setup-error');
+
+  fileInput.addEventListener('change', () => {
+    const f = fileInput.files[0];
+    fileChosenName.textContent = f ? f.name : '';
+  });
+
+  function fileToBase64(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        // reader.result is "data:<mime>;base64,<data>" — strip the prefix
+        const commaIndex = reader.result.indexOf(',');
+        resolve(reader.result.slice(commaIndex + 1));
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  beginBtn.addEventListener('click', async () => {
+    setupError.style.display = 'none';
+
+    const file = fileInput.files[0];
+    if(!file){
+      setupError.textContent = 'Upload a resume file first.';
+      setupError.style.display = 'block';
+      return;
+    }
+    const allowedTypes = [
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+    if(!allowedTypes.includes(file.type)){
+      setupError.textContent = 'Upload your resume as a .docx or .pdf file.';
+      setupError.style.display = 'block';
+      return;
+    }
+    if(file.size > 5 * 1024 * 1024){
+      setupError.textContent = 'That file is too large. Try a resume under 5MB.';
+      setupError.style.display = 'block';
+      return;
+    }
+
+    state.role = roleInput.value.trim();
+    state.company = companyInput.value.trim();
+
+    beginBtn.disabled = true;
+    beginBtn.textContent = 'Uploading…';
+
+    try {
+      const fileBase64 = await fileToBase64(file);
+
+      switchScreen('processing-screen');
+      cycleProcessingLabels();
+
+      const res = await apiFetch('/api/resume/tailor', {
+        method: 'POST',
+        body: JSON.stringify({
+          track: state.track,
+          targetRole: state.role,
+          targetCompany: state.company,
+          jobDescription: jdInput.value.trim(),
+          mosCode: mosInput.value.trim(),
+          fileBase64: fileBase64,
+          mimeType: file.type,
+          saveHistory: false
+        })
+      });
+      const body = await res.json();
+
+      if(res.status === 402){
+        document.getElementById('upgrade-message').textContent =
+          body.error || 'An active subscription is required.';
+        switchScreen('upgrade-screen');
+        return;
+      }
+      if(!res.ok){
+        throw new Error(body.error || 'Could not tailor that resume.');
+      }
+
+      state.tailored = body.tailored;
+      state.docxBase64 = body.docxBase64;
+      state.fileName = body.fileName;
+      state.memoBase64 = body.memoBase64;
+      state.memoFileName = body.memoFileName;
+      state.usedOcr = !!body.usedOcr;
+      state.keywordCoverage = body.keywordCoverage || { matched: [], missing: [] };
+      renderResults();
+
+    } catch(err){
+      switchScreen('setup-screen');
+      setupError.textContent = err.message || 'Something went wrong. Try again.';
+      setupError.style.display = 'block';
+    } finally {
+      beginBtn.disabled = false;
+      beginBtn.textContent = 'Tailor my resume →';
+    }
+  });
+
+  function switchScreen(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  // ---------- Processing screen ----------
+  const PROCESSING_LABELS = [
+    'Reading your resume…',
+    'Translating military language…',
+    'Rewriting bullets — results first…',
+    'Checking for banned verbs…',
+    'Building your Word document…'
+  ];
+  let processingInterval = null;
+  function cycleProcessingLabels(){
+    let i = 0;
+    const label = document.getElementById('processing-label');
+    label.textContent = PROCESSING_LABELS[0];
+    clearInterval(processingInterval);
+    processingInterval = setInterval(() => {
+      i = (i + 1) % PROCESSING_LABELS.length;
+      label.textContent = PROCESSING_LABELS[i];
+    }, 2200);
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str == null ? '' : String(str);
+    return d.innerHTML;
+  }
+
+  // ---------- Results screen ----------
+  function renderResults(){
+    clearInterval(processingInterval);
+    switchScreen('summary-screen');
+
+    const t = state.tailored || {};
+    const changes = (t.change_summary && t.change_summary.key_changes) || [];
+    const needsInput = Array.isArray(t.needs_your_input) ? t.needs_your_input : [];
+    const mosNotes = t.mos_translation_notes || [];
+
+    document.getElementById('ocr-notice').style.display = state.usedOcr ? 'block' : 'none';
+
+    renderKeywordCoverage(state.keywordCoverage);
+
+    document.getElementById('key-changes-list').innerHTML =
+      changes.map(x => '<li>' + escapeHtml(x) + '</li>').join('') ||
+      '<li>Rewritten for civilian clarity and quantified impact.</li>';
+
+    renderDiffView(t, needsInput);
+
+    const mosBlock = document.getElementById('mos-notes-block');
+    if(mosNotes.length){
+      document.getElementById('mos-notes-list').innerHTML =
+        mosNotes.map(x => '<li>' + escapeHtml(x) + '</li>').join('');
+      mosBlock.style.display = 'block';
+    } else {
+      mosBlock.style.display = 'none';
+    }
+  }
+
+  function renderKeywordCoverage(coverage){
+    const block = document.getElementById('keyword-block');
+    const matched = (coverage && coverage.matched) || [];
+    const missing = (coverage && coverage.missing) || [];
+
+    if(!matched.length && !missing.length){
+      block.style.display = 'none';
+      return;
+    }
+
+    block.style.display = 'block';
+    document.getElementById('keyword-matched-list').innerHTML =
+      matched.map(k => '<li>In your resume: <strong>' + escapeHtml(k) + '</strong></li>').join('');
+    document.getElementById('keyword-missing-list').innerHTML =
+      missing.map(k => '<li>Consider adding: <strong>' + escapeHtml(k) + '</strong> (if it’s true to your background)</li>').join('');
+  }
+
+  // Builds a full before/after view: the professional summary, then
+  // every experience bullet, each showing the original source
+  // wording next to the tailored version. Flagged spots (from
+  // needs_your_input) render the "after" side as an editable
+  // textarea instead of static text — editing writes straight back
+  // into state.tailored, so by the time "Download" is clicked, the
+  // data already reflects the candidate's real numbers with no
+  // separate "apply" step. Bullet/summary indices from needs_your_input
+  // are bounds-checked defensively since they come from the model's
+  // own output alongside the experience array, not a guaranteed-
+  // consistent source.
+  function renderDiffView(tailored, needsInput){
+    const container = document.getElementById('diff-view');
+    container.innerHTML = '';
+
+    const flagsByKey = {};
+    needsInput.forEach((item) => {
+      if(!item || typeof item !== 'object') return;
+      if(item.type === 'summary'){
+        flagsByKey['summary'] = item;
+      } else if(item.type === 'bullet'){
+        flagsByKey['bullet:' + item.exp_index + ':' + item.bullet_index] = item;
+      }
+    });
+
+    // Professional summary card
+    const summaryFlag = flagsByKey['summary'];
+    container.appendChild(buildDiffCard({
+      original: tailored.original_summary,
+      originalFallback: "You didn't have a professional summary before — this is new.",
+      afterValue: tailored.professional_summary || '',
+      flag: summaryFlag,
+      onEdit: (value) => { state.tailored.professional_summary = value; state.hasUnsavedEdits = true; }
+    }));
+
+    // Each role's bullets
+    (tailored.experience || []).forEach((role, expIndex) => {
+      if(!role || !Array.isArray(role.bullets) || !role.bullets.length) return;
+
+      const header = document.createElement('div');
+      header.className = 'diff-role-header';
+      header.textContent = role.title ? role.title.toUpperCase() : ('ROLE ' + (expIndex + 1));
+      container.appendChild(header);
+
+      role.bullets.forEach((bullet, bulletIndex) => {
+        const tailoredText = typeof bullet === 'string' ? bullet : (bullet && bullet.tailored) || '';
+        const originalText = typeof bullet === 'string' ? null : (bullet && bullet.original) || null;
+        if(!tailoredText) return;
+
+        const flag = flagsByKey['bullet:' + expIndex + ':' + bulletIndex];
+        container.appendChild(buildDiffCard({
+          original: originalText,
+          originalFallback: 'Combined from multiple roles or lines in your original resume — including roles we merged together as the same job repeated.',
+          afterValue: tailoredText,
+          flag: flag,
+          onEdit: (value) => {
+            state.tailored.experience[expIndex].bullets[bulletIndex] = { tailored: value, original: originalText };
+            state.hasUnsavedEdits = true;
+          }
+        }));
+      });
+    });
+  }
+
+  function buildDiffCard({ original, originalFallback, afterValue, flag, onEdit }){
+    const card = document.createElement('div');
+    card.className = 'diff-card' + (flag ? ' diff-flagged' : '');
+
+    const beforeText = original ? original : originalFallback;
+
+    let afterHtml;
+    if(flag){
+      afterHtml = `
+        <div class="diff-after">
+          <span class="diff-label">After — needs your input</span>
+          <div class="review-field-prompt">${escapeHtml(flag.prompt || 'Add the real number here.')}</div>
+          <textarea rows="2"></textarea>
+        </div>
+      `;
+    } else {
+      afterHtml = `
+        <div class="diff-after">
+          <span class="diff-label">After</span>
+          <div class="diff-after-text"></div>
+        </div>
+      `;
+    }
+
+    card.innerHTML = `
+      <div class="diff-before">
+        <span class="diff-label">Before</span>
+        <div class="diff-before-text"></div>
+      </div>
+      <div class="diff-arrow">↓</div>
+      ${afterHtml}
+    `;
+
+    card.querySelector('.diff-before-text').textContent = beforeText;
+
+    if(flag){
+      const textarea = card.querySelector('textarea');
+      textarea.value = afterValue;
+      textarea.addEventListener('input', () => onEdit(textarea.value));
+    } else {
+      card.querySelector('.diff-after-text').textContent = afterValue;
+    }
+
+    return card;
+  }
+
+  // Applies any unsaved edits by regenerating both documents server-
+  // side, if needed. Shared by both download buttons so whichever one
+  // is clicked first triggers the regen, and the other can just reuse
+  // the fresh result. Returns true if it's safe to proceed with a
+  // download, false if regeneration failed (error already shown).
+  async function applyEditsIfNeeded(btn, defaultLabel){
+    if(!state.hasUnsavedEdits) return true;
+
+    const downloadError = document.getElementById('download-error');
+    downloadError.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Applying your edits…';
+
+    try {
+      const res = await apiFetch('/api/resume/generate-docx', {
+        method: 'POST',
+        body: JSON.stringify({
+          track: state.track,
+          targetRole: state.role,
+          targetCompany: state.company,
+          tailored: state.tailored,
+          jobKeywords: (state.tailored && state.tailored.jd_keywords) || []
+        })
+      });
+      const body = await res.json();
+      if(!res.ok){
+        throw new Error(body.error || 'Could not rebuild the documents with your edits.');
+      }
+      state.docxBase64 = body.docxBase64;
+      state.fileName = body.fileName;
+      state.memoBase64 = body.memoBase64;
+      state.memoFileName = body.memoFileName;
+      state.hasUnsavedEdits = false;
+      if(body.keywordCoverage){
+        state.keywordCoverage = body.keywordCoverage;
+        renderKeywordCoverage(state.keywordCoverage);
+      }
+      return true;
+    } catch(err){
+      downloadError.textContent = err.message || 'Something went wrong preparing your download.';
+      downloadError.style.display = 'block';
+      return false;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = defaultLabel;
+    }
+  }
+
+  document.getElementById('download-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('download-btn');
+    const ok = await applyEditsIfNeeded(btn, 'Download tailored resume');
+    if(ok) triggerDocxDownload(state.docxBase64, state.fileName);
+  });
+
+  document.getElementById('download-memo-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('download-memo-btn');
+    const ok = await applyEditsIfNeeded(btn, 'Download what we changed');
+    if(ok) triggerDocxDownload(state.memoBase64, state.memoFileName);
+  });
+
+  function triggerDocxDownload(docxBase64, fileName){
+    if(!docxBase64) return;
+    const byteChars = atob(docxBase64);
+    const byteNumbers = new Array(byteChars.length);
+    for(let i = 0; i < byteChars.length; i++){
+      byteNumbers[i] = byteChars.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], {
+      type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName || 'Tailored_Resume.docx';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  document.getElementById('restart-btn').addEventListener('click', () => {
+    location.reload();
+  });
+
+})();
+</script>
+
+</body>
+</html>
