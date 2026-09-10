@@ -5,12 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>The Successful Vet — Civilian Transition Playbook for Service Members</title>
 <meta name="description" content="The complete civilian transition playbook for service members leaving the military. Book, newsletter, YouTube, and coaching — built by a veteran, for veterans." />
+<link rel="canonical" href="https://thesuccessfulvet.com/" />
 
 <!-- Open Graph -->
-<meta property="og:title" content="The Successful Vet" />
-<meta property="og:description" content="The complete civilian transition playbook for service members leaving the military." />
+<meta property="og:site_name" content="The Successful Vet" />
+<meta property="og:title" content="The Successful Vet — Civilian Transition Playbook" />
+<meta property="og:description" content="Book, weekly newsletter, YouTube, and free tools for the military-to-civilian transition — built by a veteran, for veterans and military spouses." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://thesuccessfulvet.com" />
+<meta property="og:url" content="https://thesuccessfulvet.com/" />
+<meta property="og:image" content="https://thesuccessfulvet.com/images/og-card.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="The Successful Vet — your civilian transition, handled." />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The Successful Vet — Civilian Transition Playbook" />
+<meta name="twitter:description" content="Book, weekly newsletter, YouTube, and free tools for the military-to-civilian transition — built by a veteran, for veterans and military spouses." />
+<meta name="twitter:image" content="https://thesuccessfulvet.com/images/og-card.png" />
+
+<!-- Analytics (Plausible — activate the domain at plausible.io for data to flow) -->
+<script defer data-domain="thesuccessfulvet.com" src="https://plausible.io/js/script.outbound-links.js"></script>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -728,6 +743,23 @@
     color: var(--gold-ink);
     border-color: var(--navy);
   }
+  .newsletter__embed {
+    margin: 1.25rem 0 0.75rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+  .newsletter__embed iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
+  .newsletter__fallback {
+    font-size: 0.85rem;
+    color: var(--subtle);
+    text-align: center;
+  }
+  .newsletter__fallback a { color: var(--navy); border-bottom: 1px solid var(--gold); }
   .tier {
     background: var(--cream);
     border: 1px solid var(--rule);
