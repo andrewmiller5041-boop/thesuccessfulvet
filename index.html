@@ -1161,26 +1161,68 @@
     background: var(--cream);
     padding: 5rem 0;
   }
-  .tips--paper {
-    background: var(--paper);
-    border-top: 1px solid var(--rule);
-  }
-  .tips__split {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 3.5rem;
-    align-items: start;
-  }
-  @media (max-width: 860px) {
-    .tips__split { grid-template-columns: 1fr; gap: 2rem; }
+  .tips__head {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
   }
   .tips__head h2 {
-    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    font-size: clamp(1.7rem, 3.2vw, 2.3rem);
     margin-bottom: 1rem;
   }
   .tips__head p {
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: var(--ink-soft);
+  }
+
+  /* ---- phase-line graphic: overview of the 8-step sequence ---- */
+  .path__graphic {
+    margin: 3rem 0 0.5rem;
+    overflow-x: auto;
+  }
+  .path__graphic svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 640px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  @media (max-width: 760px) {
+    .path__graphic { display: none; }
+  }
+  .path__node-num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 19px;
+  }
+  .path__phase-svg-label {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+  }
+
+  .path__phases {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 760px) {
+    .path__phases { grid-template-columns: 1fr; gap: 2.5rem; margin-top: 1rem; }
+  }
+  .path__phase-label {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 1rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--rule);
   }
   .tips__list {
     list-style: none;
@@ -1542,93 +1584,132 @@
     <div class="sec-rule">
       <div class="sec-rule__mark"><span></span><span></span><span></span></div>
     </div>
-    <div class="tips__split">
-      <div class="tips__head">
-        <span class="eyebrow">Start Here</span>
-        <h2>Four things every veteran should do first.</h2>
-        <p>
-          Before the resume, before the applications, before the LinkedIn updates. These four are crucial, you can start any of them today, and they'll save you months of stress later. This is where true results begin.
-        </p>
-      </div>
-      <ol class="tips__list">
-        <li>
-          <span class="tips__list-num">01</span>
-          <div>
-            <div class="tips__list-title">Don't panic</div>
-            <p class="tips__list-desc">You are doing something every veteran before you has done. There is an enormous number of resources available to you — many of them free, many of them excellent. You are not starting from scratch and you are not alone.</p>
-          </div>
-        </li>
-        <li>
-          <span class="tips__list-num">02</span>
-          <div>
-            <div class="tips__list-title">Plan early</div>
-            <p class="tips__list-desc">Start planning the moment you know you're transitioning. It is never too early. Talk to your family. Research certifications, degrees, and SkillBridge programs. The earlier you start, the more options stay open.</p>
-          </div>
-        </li>
-        <li>
-          <span class="tips__list-num">03</span>
-          <div>
-            <div class="tips__list-title">Define your no-compromise areas</div>
-            <p class="tips__list-desc">Before you write a resume, sit down with your family and list 3–5 things you won't compromise on — salary floor, hours, location, anything else that matters. This filter saves months of applying to the wrong roles.</p>
-          </div>
-        </li>
-        <li>
-          <span class="tips__list-num">04</span>
-          <div>
-            <div class="tips__list-title">Talk to other veterans</div>
-            <p class="tips__list-desc">Find veterans 2–5 years ahead of you in the transition. Ask them what they wish they'd known. The civilian world rewards networks — and your veteran network is the warmest one you'll ever have.</p>
-          </div>
-        </li>
-      </ol>
+    <div class="tips__head">
+      <span class="eyebrow">Start Here</span>
+      <h2>Eight moves, in the order that actually works.</h2>
+      <p>
+        Four to get your bearings, four to start building. You can start any of them today, and doing them in this order saves you months of stress later.
+      </p>
     </div>
-  </div>
-</section>
 
-<!-- ============ BUILD THESE — second 4-card tips section ============ -->
-<section class="tips tips--paper" id="build">
-  <div class="container">
-    <div class="sec-rule">
-      <div class="sec-rule__mark"><span></span><span></span><span></span></div>
+    <div class="path__graphic" aria-hidden="true">
+      <svg viewBox="0 0 1240 110" focusable="false">
+        <text x="295" y="18" text-anchor="middle" class="path__phase-svg-label" fill="var(--navy)">PHASE ONE — ORIENT</text>
+        <text x="955" y="18" text-anchor="middle" class="path__phase-svg-label" fill="var(--navy)">PHASE TWO — BUILD</text>
+
+        <line x1="70" y1="60" x2="520" y2="60" stroke="var(--rule)" stroke-width="2" />
+        <line x1="730" y1="60" x2="1180" y2="60" stroke="var(--rule)" stroke-width="2" />
+
+        <g>
+          <rect x="609" y="52" width="8" height="8" fill="var(--gold)" transform="rotate(45 613 56)" />
+          <rect x="621" y="52" width="8" height="8" fill="var(--gold)" opacity="0.6" transform="rotate(45 625 56)" />
+          <rect x="633" y="52" width="8" height="8" fill="var(--gold)" opacity="0.3" transform="rotate(45 637 56)" />
+        </g>
+
+        <g>
+          <circle cx="70" cy="60" r="20" fill="var(--navy)" stroke="var(--gold)" stroke-width="2" />
+          <text x="70" y="60" text-anchor="middle" dominant-baseline="central" class="path__node-num" fill="var(--cream)">01</text>
+        </g>
+        <g>
+          <circle cx="220" cy="60" r="20" fill="var(--navy)" stroke="var(--gold)" stroke-width="2" />
+          <text x="220" y="60" text-anchor="middle" dominant-baseline="central" class="path__node-num" fill="var(--cream)">02</text>
+        </g>
+        <g>
+          <circle cx="370" cy="60" r="20" fill="var(--navy)" stroke="var(--gold)" stroke-width="2" />
+          <text x="370" y="60" text-anchor="middle" dominant-baseline="central" class="path__node-num" fill="var(--cream)">03</text>
+        </g>
+        <g>
+          <circle cx="520" cy="60" r="20" fill="var(--navy)" stroke="var(--gold)" stroke-width="2" />
+          <text x="520" y="60" text-anchor="middle" dominant-baseline="central" class="path__node-num" fill="var(--cream)">04</text>
+        </g>
+        <g>
+          <circle cx="730" cy="60" r="20" fill="var(--navy)" stroke="var(--gold)" stroke-width="2" />
+          <text x="730" y="60" text-anchor="middle" dominant-baseline="central" class="path__node-num" fill="var(--cream)">05</text>
+        </g>
+        <g>
+          <circle cx="880" cy="60" r="20" fill="var(--navy)" stroke="var(--gold)" stroke-width="2" />
+          <text x="880" y="60" text-anchor="middle" dominant-baseline="central" class="path__node-num" fill="var(--cream)">06</text>
+        </g>
+        <g>
+          <circle cx="1030" cy="60" r="20" fill="var(--navy)" stroke="var(--gold)" stroke-width="2" />
+          <text x="1030" y="60" text-anchor="middle" dominant-baseline="central" class="path__node-num" fill="var(--cream)">07</text>
+        </g>
+        <g>
+          <circle cx="1180" cy="60" r="20" fill="var(--navy)" stroke="var(--gold)" stroke-width="2" />
+          <text x="1180" y="60" text-anchor="middle" dominant-baseline="central" class="path__node-num" fill="var(--cream)">08</text>
+        </g>
+      </svg>
     </div>
-    <div class="tips__split">
-      <div class="tips__head">
-        <span class="eyebrow">Next steps</span>
-        <h2>Start to build.</h2>
-        <p>
-          Once you've got your bearings, these are the four deliverables that move you from "thinking about it" to "actively transitioning." You can build all of these from scratch with what's on this page, and the free templates below give you a head start.
-        </p>
+
+    <div class="path__phases">
+      <div>
+        <div class="path__phase-label">Phase One — Orient</div>
+        <ol class="tips__list">
+          <li>
+            <span class="tips__list-num">01</span>
+            <div>
+              <div class="tips__list-title">Don't panic</div>
+              <p class="tips__list-desc">You are doing something every veteran before you has done. There is an enormous number of resources available to you — many of them free, many of them excellent. You are not starting from scratch and you are not alone.</p>
+            </div>
+          </li>
+          <li>
+            <span class="tips__list-num">02</span>
+            <div>
+              <div class="tips__list-title">Plan early</div>
+              <p class="tips__list-desc">Start planning the moment you know you're transitioning. It is never too early. Talk to your family. Research certifications, degrees, and SkillBridge programs. The earlier you start, the more options stay open.</p>
+            </div>
+          </li>
+          <li>
+            <span class="tips__list-num">03</span>
+            <div>
+              <div class="tips__list-title">Define your no-compromise areas</div>
+              <p class="tips__list-desc">Before you write a resume, sit down with your family and list 3–5 things you won't compromise on — salary floor, hours, location, anything else that matters. This filter saves months of applying to the wrong roles.</p>
+            </div>
+          </li>
+          <li>
+            <span class="tips__list-num">04</span>
+            <div>
+              <div class="tips__list-title">Talk to other veterans</div>
+              <p class="tips__list-desc">Find veterans 2–5 years ahead of you in the transition. Ask them what they wish they'd known. The civilian world rewards networks — and your veteran network is the warmest one you'll ever have.</p>
+            </div>
+          </li>
+        </ol>
       </div>
-      <ol class="tips__list">
-        <li>
-          <span class="tips__list-num">05</span>
-          <div>
-            <div class="tips__list-title">Draft your elevator pitch</div>
-            <p class="tips__list-desc">A 30-second strength statement you can deliver out loud without sounding like a job application. Name a specific domain, signal scale with one or two numbers, and end with the kind of role you're targeting. Practice it until it sounds like you talking.</p>
-          </div>
-        </li>
-        <li>
-          <span class="tips__list-num">06</span>
-          <div>
-            <div class="tips__list-title">Create your resume</div>
-            <p class="tips__list-desc">A civilian one-page resume with outcome-first bullets and your military experience translated into language a hiring manager actually understands. Avoid the four overused verbs (led, managed, oversaw, directed) — replace them with verbs that show what changed.</p>
-          </div>
-        </li>
-        <li>
-          <span class="tips__list-num">07</span>
-          <div>
-            <div class="tips__list-title">Start your LinkedIn</div>
-            <p class="tips__list-desc">A LinkedIn profile is your civilian "always-on" presence — recruiters search it, hiring managers check it before interviews, and former colleagues find you through it. Start with the basics: a clear headline, a real photo, and your translated experience.</p>
-          </div>
-        </li>
-        <li>
-          <span class="tips__list-num">08</span>
-          <div>
-            <div class="tips__list-title">Network, talk to veterans</div>
-            <p class="tips__list-desc">Find someone working in a role, company, or industry you're interested in. It's not a job interview — it's a learning conversation, sometimes called an informational interview. Ask how they got there, what they wish they'd known, and who else you should talk to.</p>
-          </div>
-        </li>
-      </ol>
+      <div>
+        <div class="path__phase-label">Phase Two — Build</div>
+        <ol class="tips__list" start="5">
+          <li>
+            <span class="tips__list-num">05</span>
+            <div>
+              <div class="tips__list-title">Draft your elevator pitch</div>
+              <p class="tips__list-desc">A 30-second strength statement you can deliver out loud without sounding like a job application. Name a specific domain, signal scale with one or two numbers, and end with the kind of role you're targeting. Practice it until it sounds like you talking.</p>
+            </div>
+          </li>
+          <li>
+            <span class="tips__list-num">06</span>
+            <div>
+              <div class="tips__list-title">Create your resume</div>
+              <p class="tips__list-desc">A civilian one-page resume with outcome-first bullets and your military experience translated into language a hiring manager actually understands. Avoid the four overused verbs (led, managed, oversaw, directed) — replace them with verbs that show what changed.</p>
+            </div>
+          </li>
+          <li>
+            <span class="tips__list-num">07</span>
+            <div>
+              <div class="tips__list-title">Start your LinkedIn</div>
+              <p class="tips__list-desc">A LinkedIn profile is your civilian "always-on" presence — recruiters search it, hiring managers check it before interviews, and former colleagues find you through it. Start with the basics: a clear headline, a real photo, and your translated experience.</p>
+            </div>
+          </li>
+          <li>
+            <span class="tips__list-num">08</span>
+            <div>
+              <div class="tips__list-title">Network, talk to veterans</div>
+              <p class="tips__list-desc">Find someone working in a role, company, or industry you're interested in. It's not a job interview — it's a learning conversation, sometimes called an informational interview. Ask how they got there, what they wish they'd known, and who else you should talk to.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
     </div>
+
     <p class="tips__footer-link">
       <a href="#resources">Grab the free templates to get started ↓</a>
     </p>
