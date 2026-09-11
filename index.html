@@ -448,6 +448,17 @@
   @media (max-width: 860px) {
     .about__grid { grid-template-columns: 1fr; gap: 2rem; }
   }
+  .about__portrait {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-bottom: 3px solid var(--gold);
+    box-shadow: 0 20px 44px -18px rgba(31, 58, 95, 0.4);
+  }
+  @media (max-width: 860px) {
+    .about__portrait { max-width: 240px; }
+  }
   .about__body p {
     font-size: 1.1rem;
     line-height: 1.7;
@@ -465,140 +476,112 @@
   }
 
   /* ============ BOOK SECTION ============ */
-  .book-sec {
-    background: var(--cream);
-    position: relative;
-    overflow: hidden;
-  }
-  .book-sec::before {
-    content: '';
-    position: absolute;
-    top: -50%; right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(200, 162, 75, 0.08), transparent 70%);
-    pointer-events: none;
-  }
-  .book-sec__inner {
+  /* ============ LIBRARY: BOOK + YOUTUBE, SIDE BY SIDE ============ */
+  .library { background: var(--cream); padding: 5rem 0; }
+  .library__grid {
     display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    gap: 5rem;
-    align-items: center;
-    position: relative;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    border: 1px solid var(--rule);
   }
-  @media (max-width: 860px) {
-    .book-sec__inner {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-    .book-sec__inner .book { margin: 0 auto; }
+  @media (max-width: 900px) {
+    .library__grid { grid-template-columns: 1fr; }
   }
-  .book-sec__body h2 { margin-bottom: 0.5rem; }
-  .book-sec__tagline {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 1.15rem;
-    color: var(--gold-ink);
-    margin-bottom: 1.5rem;
-    line-height: 1.35;
+  .library__panel {
+    padding: clamp(2.25rem, 4vw, 3rem) clamp(1.75rem, 4vw, 3rem);
   }
-  .book-sec__lede {
-    font-size: 1.15rem;
-    line-height: 1.6;
-    color: var(--ink);
-    margin-bottom: 1.25rem;
-    font-weight: 500;
+  .library__panel--book {
+    background: var(--paper);
+    border-right: 1px solid var(--rule);
   }
-  .book-sec__list {
-    list-style: none;
-    margin: 1.75rem 0 2rem;
+  @media (max-width: 900px) {
+    .library__panel--book { border-right: none; border-bottom: 1px solid var(--rule); }
   }
-  .book-sec__list li {
-    position: relative;
-    padding-left: 1.75rem;
-    margin-bottom: 0.85rem;
-    font-size: 1rem;
-    color: var(--ink-soft);
-  }
-  .book-sec__list li::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0.65rem;
-    width: 12px;
-    height: 1px;
-    background: var(--gold);
-  }
-  .book-sec__list li strong {
-    color: var(--ink);
-    font-weight: 600;
-  }
-
-  /* ============ YOUTUBE ============ */
-  .yt {
-    background: var(--navy-deep);
+  .library__panel--yt {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
     color: var(--cream);
     position: relative;
     overflow: hidden;
   }
-  .yt::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
-  }
-  .yt::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
-  }
-  .yt h2 { color: var(--cream); }
-  .yt .eyebrow { color: var(--gold); }
-  .yt__inner {
-    max-width: 880px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .yt__head {
-    max-width: 660px;
-    margin: 0 auto 2.5rem;
-  }
-  .yt__head p {
-    color: rgba(249, 247, 240, 0.8);
-    font-size: 1.05rem;
+  .library__panel--yt h2 { color: var(--cream); }
+  .library__panel--yt .eyebrow { color: var(--gold); }
+  .library h2 { font-size: clamp(1.5rem, 2.8vw, 1.9rem); margin: 0.6rem 0 0.9rem; }
+  .library__lede {
+    font-size: 0.98rem;
     line-height: 1.6;
-    margin-bottom: 0.75rem;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
   }
-  .yt__videos {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    margin-bottom: 2.25rem;
-    text-align: left;
+  .library__panel--yt .library__lede { color: rgba(249, 247, 240, 0.78); }
+  .library__book-row {
+    display: flex;
+    gap: 1.75rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
   }
-  @media (max-width: 760px) {
-    .yt__videos {
-      grid-template-columns: 1fr;
-      max-width: 360px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+  .library__book-row > a { flex-shrink: 0; }
+  .library__book-row > div { min-width: 0; }
+  .library__book-row .book-cover { width: 190px; }
+  @media (max-width: 480px) {
+    .library__book-row { flex-direction: column; }
+    .library__book-row .book-cover { width: 170px; }
+  }
+  .library__tagline {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--gold-ink);
+    margin-bottom: 0.65rem;
+    line-height: 1.35;
+  }
+  .library__book-row p:last-child { margin-bottom: 0; }
+  .library__list {
+    list-style: none;
+    margin: 0 0 1.75rem;
+    padding: 0;
+  }
+  .library__list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .library__list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.65rem;
+    width: 10px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .library__list li strong { color: var(--ink); font-weight: 600; }
+
+  /* ---- youtube playlist rows ---- */
+  .yt__list {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
   }
   .yt__video {
     display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
+    align-items: center;
+    gap: 0.9rem;
   }
   .yt__thumb {
     position: relative;
     display: block;
+    width: 108px;
     aspect-ratio: 16 / 9;
+    flex-shrink: 0;
     overflow: hidden;
     background: var(--navy);
     border: 1px solid rgba(200, 162, 75, 0.3);
-    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease;
   }
   .yt__thumb img {
     width: 100%;
@@ -607,32 +590,26 @@
     display: block;
     transition: transform 0.4s ease;
   }
-  .yt__video:hover .yt__thumb {
-    border-color: var(--gold);
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px -12px rgba(0,0,0,0.45);
-  }
-  .yt__video:hover .yt__thumb img { transform: scale(1.04); }
+  .yt__video:hover .yt__thumb { border-color: var(--gold); }
+  .yt__video:hover .yt__thumb img { transform: scale(1.06); }
   .yt__play {
     position: absolute;
     inset: 0;
     margin: auto;
-    width: 54px;
-    height: 54px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: var(--gold);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease;
   }
-  .yt__play svg { margin-left: 3px; }
-  .yt__video:hover .yt__play { transform: scale(1.1); }
+  .yt__play svg { width: 11px; height: 11px; margin-left: 1px; }
   .yt__video-title {
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-size: 0.87rem;
     font-weight: 500;
-    line-height: 1.45;
+    line-height: 1.4;
     color: rgba(249, 247, 240, 0.9);
   }
 
@@ -640,16 +617,24 @@
   .newsletter {
     background: var(--paper);
   }
-  .newsletter__inner {
-    max-width: 760px;
-    margin: 0 auto;
-    text-align: center;
+  .newsletter__split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: start;
+    text-align: left;
   }
-  .newsletter h2 { margin-bottom: 1.25rem; }
+  @media (max-width: 860px) {
+    .newsletter__split { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  .newsletter__col h2 {
+    font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+    margin: 0.5rem 0 0.85rem;
+  }
   .newsletter__lede {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     color: var(--ink-soft);
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.75rem;
   }
   .newsletter__tiers {
     display: grid;
@@ -663,7 +648,7 @@
   }
   .newsletter__single {
     max-width: 460px;
-    margin: 0 auto 1.75rem;
+    margin: 0 0 1.75rem;
     text-align: left;
   }
   .newsletter__note {
@@ -671,7 +656,77 @@
     color: var(--subtle);
     font-style: italic;
     max-width: 520px;
-    margin: 0 auto;
+  }
+  .newsletter__embed {
+    margin: 1.25rem 0 0.75rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+  .newsletter__embed iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
+  .newsletter__fallback {
+    font-size: 0.85rem;
+    color: var(--subtle);
+    text-align: center;
+  }
+  .newsletter__fallback a { color: var(--navy); border-bottom: 1px solid var(--gold); }
+  .newsletter__posts {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+  }
+  .newsletter__posts li { border-top: 1px solid var(--rule); }
+  .newsletter__posts li:first-child { border-top: none; }
+  .newsletter__posts a {
+    display: block;
+    padding: 1.1rem 0;
+    text-decoration: none;
+  }
+  .newsletter__post-date {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+    margin-bottom: 0.4rem;
+  }
+  .newsletter__post-title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--navy);
+    margin-bottom: 0.35rem;
+    transition: color 0.2s ease;
+  }
+  .newsletter__posts a:hover .newsletter__post-title { color: var(--gold-ink); }
+  .newsletter__post-excerpt {
+    display: block;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .newsletter__archive-link {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--gold);
+    padding-bottom: 2px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .newsletter__archive-link:hover {
+    color: var(--gold-ink);
+    border-color: var(--navy);
   }
   .tier {
     background: var(--cream);
@@ -1095,67 +1150,62 @@
     background: var(--paper);
     border-top: 1px solid var(--rule);
   }
-  .tips--paper .tip {
-    background: var(--cream);
+  .tips__split {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 3.5rem;
+    align-items: start;
   }
-  .tips__head {
-    text-align: center;
-    max-width: 680px;
-    margin: 0 auto 3rem;
+  @media (max-width: 860px) {
+    .tips__split { grid-template-columns: 1fr; gap: 2rem; }
   }
   .tips__head h2 {
-    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
     margin-bottom: 1rem;
   }
   .tips__head p {
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: var(--ink-soft);
   }
-  .tips__grid {
+  .tips__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .tips__list li {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 2.75rem 1fr;
     gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--rule);
   }
-  @media (max-width: 980px) {
-    .tips__grid { grid-template-columns: repeat(2, 1fr); }
+  .tips__list li:first-child {
+    padding-top: 0;
+    border-top: none;
   }
-  @media (max-width: 560px) {
-    .tips__grid { grid-template-columns: 1fr; }
-  }
-  .tip {
-    background: var(--paper);
-    border: 1px solid var(--rule);
-    padding: 1.75rem 1.5rem;
-    transition: all 0.25s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .tip:hover {
-    border-color: var(--gold);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px -12px rgba(31, 58, 95, 0.2);
-  }
-  .tip__num {
+  .tips__list li:last-child { padding-bottom: 0; }
+  .tips__list-num {
     font-family: var(--font-display);
     font-style: italic;
-    font-size: 0.95rem;
-    color: var(--gold-ink);
+    font-size: 1.3rem;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    color: var(--gold-ink);
+    line-height: 1;
+    padding-top: 0.2rem;
   }
-  .tip__title {
+  .tips__list-title {
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 600;
     color: var(--navy);
-    line-height: 1.2;
+    margin-bottom: 0.4rem;
+    line-height: 1.25;
   }
-  .tip__desc {
-    font-size: 0.92rem;
-    line-height: 1.55;
+  .tips__list-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
     color: var(--ink-soft);
-    flex: 1;
+    margin: 0;
   }
   .tip__template {
     display: inline-flex;
@@ -1454,11 +1504,11 @@
           You're about to do something <strong>every veteran before you has done.</strong> You don't have to figure it out in the dark, or start from scratch. This site exists to be a steady hand on the wall — a book, a weekly newsletter, a YouTube channel, and a growing library of practical tools — for the journey from uniform to civilian career.
         </p>
         <div class="hero__ctas">
-          <a href="#start" class="btn btn--primary">
-            Start Here <span class="btn__arrow">↓</span>
+          <a href="https://successfulvet.substack.com/" class="btn btn--primary" target="_blank" rel="noopener">
+            Subscribe to the Newsletter <span class="btn__arrow">→</span>
           </a>
-          <a href="https://successfulvet.substack.com/" class="btn btn--secondary" target="_blank" rel="noopener">
-            The Newsletter
+          <a href="#resources" class="btn btn--secondary">
+            Free Templates <span class="btn__arrow">↓</span>
           </a>
         </div>
       </div>
@@ -1477,42 +1527,44 @@
     <div class="sec-rule">
       <div class="sec-rule__mark"><span></span><span></span><span></span></div>
     </div>
-    <div class="tips__head">
-      <span class="eyebrow">Start Here</span>
-      <h2>Four things every veteran should do first.</h2>
-      <p>
-        Before the resume, before the applications, before the LinkedIn updates. These four are crucial, you can start any of them today, and they'll save you months of stress later. This is where true results begin.
-      </p>
-    </div>
-    <div class="tips__grid">
-      <div class="tip">
-        <span class="tip__num">01</span>
-        <div class="tip__title">Don't panic</div>
-        <div class="tip__desc">
-          You are doing something every veteran before you has done. There is an enormous number of resources available to you — many of them free, many of them excellent. You are not starting from scratch and you are not alone.
-        </div>
+    <div class="tips__split">
+      <div class="tips__head">
+        <span class="eyebrow">Start Here</span>
+        <h2>Four things every veteran should do first.</h2>
+        <p>
+          Before the resume, before the applications, before the LinkedIn updates. These four are crucial, you can start any of them today, and they'll save you months of stress later. This is where true results begin.
+        </p>
       </div>
-      <div class="tip">
-        <span class="tip__num">02</span>
-        <div class="tip__title">Plan early</div>
-        <div class="tip__desc">
-          Start planning the moment you know you're transitioning. It is never too early. Talk to your family. Research certifications, degrees, and SkillBridge programs. The earlier you start, the more options stay open.
-        </div>
-      </div>
-      <div class="tip">
-        <span class="tip__num">03</span>
-        <div class="tip__title">Define your no-compromise areas</div>
-        <div class="tip__desc">
-          Before you write a resume, sit down with your family and list 3–5 things you won't compromise on — salary floor, hours, location, anything else that matters. This filter saves months of applying to the wrong roles.
-        </div>
-      </div>
-      <div class="tip">
-        <span class="tip__num">04</span>
-        <div class="tip__title">Talk to other veterans</div>
-        <div class="tip__desc">
-          Find veterans 2–5 years ahead of you in the transition. Ask them what they wish they'd known. The civilian world rewards networks — and your veteran network is the warmest one you'll ever have.
-        </div>
-      </div>
+      <ol class="tips__list">
+        <li>
+          <span class="tips__list-num">01</span>
+          <div>
+            <div class="tips__list-title">Don't panic</div>
+            <p class="tips__list-desc">You are doing something every veteran before you has done. There is an enormous number of resources available to you — many of them free, many of them excellent. You are not starting from scratch and you are not alone.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tips__list-num">02</span>
+          <div>
+            <div class="tips__list-title">Plan early</div>
+            <p class="tips__list-desc">Start planning the moment you know you're transitioning. It is never too early. Talk to your family. Research certifications, degrees, and SkillBridge programs. The earlier you start, the more options stay open.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tips__list-num">03</span>
+          <div>
+            <div class="tips__list-title">Define your no-compromise areas</div>
+            <p class="tips__list-desc">Before you write a resume, sit down with your family and list 3–5 things you won't compromise on — salary floor, hours, location, anything else that matters. This filter saves months of applying to the wrong roles.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tips__list-num">04</span>
+          <div>
+            <div class="tips__list-title">Talk to other veterans</div>
+            <p class="tips__list-desc">Find veterans 2–5 years ahead of you in the transition. Ask them what they wish they'd known. The civilian world rewards networks — and your veteran network is the warmest one you'll ever have.</p>
+          </div>
+        </li>
+      </ol>
     </div>
   </div>
 </section>
@@ -1523,42 +1575,44 @@
     <div class="sec-rule">
       <div class="sec-rule__mark"><span></span><span></span><span></span></div>
     </div>
-    <div class="tips__head">
-      <span class="eyebrow">Next steps</span>
-      <h2>Start to build.</h2>
-      <p>
-        Once you've got your bearings, these are the four deliverables that move you from "thinking about it" to "actively transitioning." You can build all of these from scratch with what's on this page, and the free templates below give you a head start.
-      </p>
-    </div>
-    <div class="tips__grid">
-      <div class="tip">
-        <span class="tip__num">05</span>
-        <div class="tip__title">Draft your elevator pitch</div>
-        <div class="tip__desc">
-          A 30-second strength statement you can deliver out loud without sounding like a job application. Name a specific domain, signal scale with one or two numbers, and end with the kind of role you're targeting. Practice it until it sounds like you talking.
-        </div>
+    <div class="tips__split">
+      <div class="tips__head">
+        <span class="eyebrow">Next steps</span>
+        <h2>Start to build.</h2>
+        <p>
+          Once you've got your bearings, these are the four deliverables that move you from "thinking about it" to "actively transitioning." You can build all of these from scratch with what's on this page, and the free templates below give you a head start.
+        </p>
       </div>
-      <div class="tip">
-        <span class="tip__num">06</span>
-        <div class="tip__title">Create your resume</div>
-        <div class="tip__desc">
-          A civilian one-page resume with outcome-first bullets and your military experience translated into language a hiring manager actually understands. Avoid the four overused verbs (led, managed, oversaw, directed) — replace them with verbs that show what changed.
-        </div>
-      </div>
-      <div class="tip">
-        <span class="tip__num">07</span>
-        <div class="tip__title">Start your LinkedIn</div>
-        <div class="tip__desc">
-          A LinkedIn profile is your civilian "always-on" presence — recruiters search it, hiring managers check it before interviews, and former colleagues find you through it. Start with the basics: a clear headline, a real photo, and your translated experience.
-        </div>
-      </div>
-      <div class="tip">
-        <span class="tip__num">08</span>
-        <div class="tip__title">Network, talk to veterans</div>
-        <div class="tip__desc">
-          Find someone working in a role, company, or industry you're interested in. It's not a job interview — it's a learning conversation, sometimes called an informational interview. Ask how they got there, what they wish they'd known, and who else you should talk to.
-        </div>
-      </div>
+      <ol class="tips__list">
+        <li>
+          <span class="tips__list-num">05</span>
+          <div>
+            <div class="tips__list-title">Draft your elevator pitch</div>
+            <p class="tips__list-desc">A 30-second strength statement you can deliver out loud without sounding like a job application. Name a specific domain, signal scale with one or two numbers, and end with the kind of role you're targeting. Practice it until it sounds like you talking.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tips__list-num">06</span>
+          <div>
+            <div class="tips__list-title">Create your resume</div>
+            <p class="tips__list-desc">A civilian one-page resume with outcome-first bullets and your military experience translated into language a hiring manager actually understands. Avoid the four overused verbs (led, managed, oversaw, directed) — replace them with verbs that show what changed.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tips__list-num">07</span>
+          <div>
+            <div class="tips__list-title">Start your LinkedIn</div>
+            <p class="tips__list-desc">A LinkedIn profile is your civilian "always-on" presence — recruiters search it, hiring managers check it before interviews, and former colleagues find you through it. Start with the basics: a clear headline, a real photo, and your translated experience.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tips__list-num">08</span>
+          <div>
+            <div class="tips__list-title">Network, talk to veterans</div>
+            <p class="tips__list-desc">Find someone working in a role, company, or industry you're interested in. It's not a job interview — it's a learning conversation, sometimes called an informational interview. Ask how they got there, what they wish they'd known, and who else you should talk to.</p>
+          </div>
+        </li>
+      </ol>
     </div>
     <p class="tips__footer-link">
       <a href="#resources">Grab the free templates to get started ↓</a>
@@ -1706,6 +1760,7 @@
       <div>
         <span class="eyebrow">About</span>
         <h2>Who's on the other side of this site.</h2>
+        <img class="about__portrait" src="images/andrew-miller.jpg" alt="Andrew Miller, Army veteran and founder of The Successful Vet" width="900" height="1125" loading="lazy">
       </div>
       <div class="about__body">
         <p>
@@ -1726,82 +1781,83 @@
 </section>
 
 <!-- ============ BOOK ============ -->
-<section class="book-sec" id="book">
+<section class="library">
   <div class="container">
     <div class="sec-rule">
       <div class="sec-rule__mark"><span></span><span></span><span></span></div>
     </div>
-    <div class="book-sec__inner">
-      <div style="justify-self: center;">
-        <a href="https://www.amazon.com/dp/B0DJL271C9" target="_blank" rel="noopener" aria-label="View The Successful Veteran on Amazon">
-          <img class="book-cover" src="images/book-cover.jpg" alt="The Successful Veteran — The Modern Guide to Networking, AI, and Landing the Job by Andrew Miller" loading="lazy" width="280" height="420" />
-        </a>
-      </div>
-      <div class="book-sec__body">
+    <div class="library__grid">
+
+      <div class="library__panel library__panel--book" id="book">
         <span class="eyebrow">The Book</span>
         <h2>The Successful Veteran</h2>
-        <p class="book-sec__tagline">The Modern Guide to Networking, AI, and Landing the Job</p>
-        <p class="book-sec__lede">
-          The complete playbook for the modern military transition. Available on Amazon in paperback and Kindle — covering networking, the smart use of AI, and everything it takes to land the right job, one step at a time.
-        </p>
-        <ul class="book-sec__list">
+        <div class="library__book-row">
+          <a href="https://www.amazon.com/dp/B0DJL271C9" target="_blank" rel="noopener" aria-label="View The Successful Veteran on Amazon">
+            <img class="book-cover" src="images/book-cover.jpg" alt="The Successful Veteran — The Modern Guide to Networking, AI, and Landing the Job by Andrew Miller" loading="lazy" width="280" height="420">
+          </a>
+          <div>
+            <p class="library__tagline">The Modern Guide to Networking, AI, and Landing the Job</p>
+            <p class="library__lede">
+              The complete playbook for the modern military transition. Available on Amazon in paperback and Kindle.
+            </p>
+          </div>
+        </div>
+        <ul class="library__list">
           <li><strong>Finding your fit.</strong> The no-compromise framework that eliminates months of stress before you ever open a job board.</li>
           <li><strong>Translating your MOS, Rating, or AFSC.</strong> A full crosswalk for all five branches with civilian equivalents and target roles.</li>
-          <li><strong>The civilian resume.</strong> Outcome-first bullet construction, the verbs to avoid, and ATS-readiness — all walked through with examples.</li>
-          <li><strong>LinkedIn and networking.</strong> A 25-point profile audit and a friendlier, tiered outreach approach that actually gets replies.</li>
-          <li><strong>The interview and the offer.</strong> Behavioral storytelling, salary research, and a negotiation approach that respects everyone at the table.</li>
+          <li><strong>The civilian resume, LinkedIn, and the interview.</strong> Outcome-first bullets, a 25-point profile audit, and a negotiation approach that respects everyone at the table.</li>
         </ul>
         <a href="https://www.amazon.com/dp/B0DJL271C9" class="btn btn--primary" target="_blank" rel="noopener">
           Get the Book on Amazon <span class="btn__arrow">→</span>
         </a>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- ============ YOUTUBE ============ -->
-<section class="yt" id="youtube">
-  <div class="container">
-    <div class="yt__inner">
-      <div class="yt__head">
+      <div class="library__panel library__panel--yt" id="youtube">
         <span class="eyebrow">YouTube</span>
-        <h2>Free weekly videos for transitioning vets.</h2>
-        <p>
-          Resume teardowns, MOS translations, LinkedIn walkthroughs, AI prompts, and honest conversations about the transition. Free to watch, no signup required.
+        <h2>Free weekly videos</h2>
+        <p class="library__lede">
+          Resume teardowns, MOS translations, LinkedIn walkthroughs, and honest conversations about the transition. Free to watch, no signup required.
         </p>
+        <ul class="yt__list">
+          <li>
+            <a class="yt__video" href="https://www.youtube.com/watch?v=I-tl2aG8umc" target="_blank" rel="noopener">
+              <span class="yt__thumb">
+                <img src="https://i.ytimg.com/vi/I-tl2aG8umc/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+                <span class="yt__play" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4L20 12L6 20V4Z" fill="#15293F"/></svg>
+                </span>
+              </span>
+              <span class="yt__video-title">Resume Impact</span>
+            </a>
+          </li>
+          <li>
+            <a class="yt__video" href="https://www.youtube.com/watch?v=hcxuWNbYAXM" target="_blank" rel="noopener">
+              <span class="yt__thumb">
+                <img src="https://i.ytimg.com/vi/hcxuWNbYAXM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+                <span class="yt__play" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4L20 12L6 20V4Z" fill="#15293F"/></svg>
+                </span>
+              </span>
+              <span class="yt__video-title">How to Write a Professional Summary That Actually Says Something</span>
+            </a>
+          </li>
+          <li>
+            <a class="yt__video" href="https://www.youtube.com/watch?v=hG5iPgKUPzo" target="_blank" rel="noopener">
+              <span class="yt__thumb">
+                <img src="https://i.ytimg.com/vi/hG5iPgKUPzo/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+                <span class="yt__play" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4L20 12L6 20V4Z" fill="#15293F"/></svg>
+                </span>
+              </span>
+              <span class="yt__video-title">Stop "Spray &amp; Pray": How Veterans Should Tailor Resumes to Land Interviews</span>
+            </a>
+          </li>
+        </ul>
+        <a href="https://www.youtube.com/@SuccessfulVet-h9d" class="btn btn--gold" target="_blank" rel="noopener">
+          Subscribe on YouTube <span class="btn__arrow">→</span>
+        </a>
       </div>
-      <div class="yt__videos">
-        <a class="yt__video" href="https://www.youtube.com/watch?v=I-tl2aG8umc" target="_blank" rel="noopener">
-          <span class="yt__thumb">
-            <img src="https://i.ytimg.com/vi/I-tl2aG8umc/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
-            <span class="yt__play" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4L20 12L6 20V4Z" fill="#15293F"/></svg>
-            </span>
-          </span>
-          <span class="yt__video-title">Resume Impact</span>
-        </a>
-        <a class="yt__video" href="https://www.youtube.com/watch?v=hcxuWNbYAXM" target="_blank" rel="noopener">
-          <span class="yt__thumb">
-            <img src="https://i.ytimg.com/vi/hcxuWNbYAXM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
-            <span class="yt__play" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4L20 12L6 20V4Z" fill="#15293F"/></svg>
-            </span>
-          </span>
-          <span class="yt__video-title">How to Write a Professional Summary That Actually Says Something</span>
-        </a>
-        <a class="yt__video" href="https://www.youtube.com/watch?v=hG5iPgKUPzo" target="_blank" rel="noopener">
-          <span class="yt__thumb">
-            <img src="https://i.ytimg.com/vi/hG5iPgKUPzo/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
-            <span class="yt__play" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 4L20 12L6 20V4Z" fill="#15293F"/></svg>
-            </span>
-          </span>
-          <span class="yt__video-title">Stop "Spray &amp; Pray": How Veterans Should Tailor Resumes to Land Interviews</span>
-        </a>
-      </div>
-      <a href="https://www.youtube.com/@SuccessfulVet-h9d" class="btn btn--gold" target="_blank" rel="noopener">
-        Subscribe on YouTube <span class="btn__arrow">→</span>
-      </a>
+
     </div>
   </div>
 </section>
@@ -1812,25 +1868,60 @@
     <div class="sec-rule">
       <div class="sec-rule__mark"><span></span><span></span><span></span></div>
     </div>
-    <div class="newsletter__inner">
-      <span class="eyebrow">The Newsletter</span>
-      <h2>One tactical post every week. Always free.</h2>
-      <p class="newsletter__lede">
-        Every week I publish a tactical post on the military-to-civilian transition — real frameworks and examples, zero fluff, delivered straight to your inbox.
-      </p>
-      <div class="newsletter__single">
-        <div class="tier">
-          <div class="tier__name">Free</div>
-          <div class="tier__price">$0 — just subscribe</div>
-          <ul class="tier__features">
-            <li>One tactical post every week, free to read</li>
-            <li>Real frameworks and examples, zero fluff</li>
-            <li>Delivered straight to your inbox</li>
-          </ul>
-          <a href="https://successfulvet.substack.com/" class="btn btn--secondary" target="_blank" rel="noopener" style="width: 100%; justify-content: center;">
-            Subscribe Free
-          </a>
+    <div class="newsletter__split">
+      <div class="newsletter__col">
+        <span class="eyebrow">The Newsletter</span>
+        <h2>One tactical post every week. Always free.</h2>
+        <p class="newsletter__lede">
+          Every week I publish a tactical post on the military-to-civilian transition — real frameworks and examples, zero fluff, delivered straight to your inbox.
+        </p>
+        <div class="newsletter__single">
+          <div class="tier">
+            <div class="tier__name">Free</div>
+            <div class="tier__price">$0 — just subscribe</div>
+            <ul class="tier__features">
+              <li>One tactical post every week, free to read</li>
+              <li>Real frameworks and examples, zero fluff</li>
+              <li>Delivered straight to your inbox</li>
+            </ul>
+            <div class="newsletter__embed">
+              <iframe src="https://successfulvet.substack.com/embed" height="150" title="Subscribe to The Successful Vet newsletter" scrolling="no" loading="lazy"></iframe>
+            </div>
+            <p class="newsletter__fallback">
+              Trouble with the form? <a href="https://successfulvet.substack.com/" target="_blank" rel="noopener">Subscribe on Substack →</a>
+            </p>
+          </div>
         </div>
+      </div>
+      <div class="newsletter__col">
+        <span class="eyebrow">Recent Posts</span>
+        <h2>From the archive.</h2>
+        <ul class="newsletter__posts">
+          <li>
+            <a href="https://successfulvet.substack.com/p/you-will-feel-like-an-imposter-you" target="_blank" rel="noopener">
+              <span class="newsletter__post-date">Jul 27</span>
+              <span class="newsletter__post-title">You Will Feel Like an Imposter. You Aren't One.</span>
+              <span class="newsletter__post-excerpt">It's not a personal flaw, it's a predictable side effect of exactly the transition you're going through.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://successfulvet.substack.com/p/the-almost-complete-guide-to-paying" target="_blank" rel="noopener">
+              <span class="newsletter__post-date">Jul 19</span>
+              <span class="newsletter__post-title">The (Almost) Complete Guide to Paying for Your Future</span>
+              <span class="newsletter__post-excerpt">A field manual for the money nobody hands you a briefing on.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://successfulvet.substack.com/p/stop-collecting-certifications-start" target="_blank" rel="noopener">
+              <span class="newsletter__post-date">Jul 13</span>
+              <span class="newsletter__post-title">Stop Collecting Certifications. Start Collecting the One That Matters.</span>
+              <span class="newsletter__post-excerpt">A field guide to proving a certification is worth earning before you touch a syllabus.</span>
+            </a>
+          </li>
+        </ul>
+        <a href="https://successfulvet.substack.com/archive" class="newsletter__archive-link" target="_blank" rel="noopener">
+          Read the full archive →
+        </a>
       </div>
     </div>
   </div>
