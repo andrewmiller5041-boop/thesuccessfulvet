@@ -336,12 +336,26 @@
     .hero__book { display: none; }
   }
   .hero__title {
-    margin: 0.5rem 0 1.75rem;
+    margin: 0 0 1.25rem;
   }
   .hero__title em {
     font-style: italic;
     font-weight: 400;
     color: var(--gold);
+  }
+  .hero__lede {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    line-height: 1.4;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+  }
+  .hero__lede em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--gold-ink);
   }
   .hero__sub {
     font-size: 1.15rem;
@@ -1103,8 +1117,7 @@
     transform: translateY(0);
   }
   /* Stagger the hero on load */
-  .hero .eyebrow { animation: fadeUp 0.8s ease 0.1s both; }
-  .hero__title { animation: fadeUp 0.8s ease 0.2s both; }
+  .hero__title { animation: fadeUp 0.8s ease 0.1s both; }
   .hero__sub { animation: fadeUp 0.8s ease 0.35s both; }
   .hero__ctas { animation: fadeUp 0.8s ease 0.5s both; }
   .hero__meta { animation: fadeUp 0.8s ease 0.65s both; }
@@ -1629,13 +1642,15 @@
   <div class="container">
     <div class="hero__grid">
       <div class="hero__copy">
-        <span class="eyebrow">A resource for transitioning veterans and military spouses</span>
+        <h1 class="hero__title">
+          A resource for transitioning veterans <em>and military spouses</em>.
+        </h1>
         <p class="hero__tagline">
           Don't panic. Transitioning out of the military is stressful — but it doesn't have to be hard.
         </p>
-        <h1 class="hero__title">
+        <p class="hero__lede">
           You can do this — and you don't have to do it <em>alone</em>.
-        </h1>
+        </p>
         <p class="hero__welcome">
           You're about to do something <strong>every veteran before you has done.</strong> You don't have to figure it out in the dark, or start from scratch. This site exists to be a steady hand on the wall — a book, a weekly newsletter, a YouTube channel, and a growing library of practical tools — for the journey from uniform to civilian career.
         </p>
